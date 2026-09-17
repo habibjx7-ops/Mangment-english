@@ -1,1 +1,688 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Management English Academy</title>
 
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+}
+
+header {
+    background: linear-gradient(135deg, #0f172a, #2563eb);
+    color: white;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0 0 10px;
+    font-size: 32px;
+}
+
+header p {
+    margin: 0;
+    opacity: .9;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 15px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+h2 {
+    color: #1d4ed8;
+}
+
+.lesson {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.lesson:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.lesson h3 {
+    margin-top: 0;
+    color: #111827;
+}
+
+.lesson-content {
+    display: none;
+    margin-top: 15px;
+    line-height: 1.8;
+}
+
+button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    margin: 5px;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.vocab {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.vocab th,
+.vocab td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: right;
+}
+
+.vocab th {
+    background: #eff6ff;
+}
+
+.quiz-question {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.option {
+    display: block;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 7px 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background: #eff6ff;
+}
+
+.result {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.progress {
+    height: 12px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #2563eb;
+    width: 0%;
+    transition: .4s;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #6b7280;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Management English Academy</h1>
+    <p>أكاديمية اللغة الإنجليزية للإدارة والأعمال</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>📚 الدروس</h2>
+        <p>24 درسًا لتطوير اللغة الإنجليزية في الإدارة والأعمال.</p>
+
+        <div id="lessons"></div>
+    </div>
+
+    <div class="card">
+        <h2>📖 أهم المفردات</h2>
+
+        <table class="vocab">
+            <thead>
+                <tr>
+                    <th>English</th>
+                    <th>العربية</th>
+                    <th>Example</th>
+                </tr>
+            </thead>
+
+            <tbody id="vocabTable"></tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>🎯 اختبار اللغة</h2>
+
+        <div id="quiz"></div>
+
+        <button onclick="checkQuiz()">تصحيح الاختبار</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <div class="card">
+        <h2>📈 التقدم</h2>
+
+        <p>تقدمك في الدروس:</p>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <p id="progressText">0%</p>
+
+        <p id="bestScore">أفضل نتيجة: لم يتم الاختبار بعد</p>
+    </div>
+
+    <div class="card">
+        <h2>💼 Business Communication Skills</h2>
+
+        <h3>1. الاجتماعات Meetings</h3>
+        <p>
+            Useful expressions:
+        </p>
+
+        <ul>
+            <li>Let's get started.</li>
+            <li>I'd like to discuss...</li>
+            <li>Could you clarify that?</li>
+            <li>Let's move on to the next point.</li>
+            <li>Let's summarize the key points.</li>
+        </ul>
+
+        <h3>2. Presentations</h3>
+
+        <ul>
+            <li>Today I'd like to talk about...</li>
+            <li>Let me explain...</li>
+            <li>As you can see...</li>
+            <li>To summarize...</li>
+        </ul>
+
+        <h3>3. Negotiations</h3>
+
+        <ul>
+            <li>We are willing to consider...</li>
+            <li>Could you offer a better price?</li>
+            <li>That sounds reasonable.</li>
+            <li>We need to reach an agreement.</li>
+        </ul>
+
+        <h3>4. Emails</h3>
+
+        <ul>
+            <li>Dear Mr. Smith,</li>
+            <li>I am writing regarding...</li>
+            <li>Please find attached...</li>
+            <li>I look forward to hearing from you.</li>
+            <li>Best regards,</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    Management English Academy © 2026
+</footer>
+
+<script>
+
+const lessons = [
+    {
+        title: "Lesson 1: Introducing Yourself",
+        text: "Learn how to introduce yourself professionally in a business environment."
+    },
+    {
+        title: "Lesson 2: Your Job",
+        text: "Learn how to describe your job, responsibilities and position."
+    },
+    {
+        title: "Lesson 3: Departments",
+        text: "Learn vocabulary related to departments and organizational structure."
+    },
+    {
+        title: "Lesson 4: Management",
+        text: "Learn important English expressions used by managers."
+    },
+    {
+        title: "Lesson 5: Leadership",
+        text: "Learn vocabulary and expressions related to leadership."
+    },
+    {
+        title: "Lesson 6: Teamwork",
+        text: "Learn how to communicate effectively with your team."
+    },
+    {
+        title: "Lesson 7: Meetings",
+        text: "Learn useful phrases for participating in meetings."
+    },
+    {
+        title: "Lesson 8: Presentations",
+        text: "Learn how to give professional presentations."
+    },
+    {
+        title: "Lesson 9: Negotiation",
+        text: "Learn useful negotiation expressions."
+    },
+    {
+        title: "Lesson 10: Business Emails",
+        text: "Learn how to write professional business emails."
+    },
+    {
+        title: "Lesson 11: Customer Service",
+        text: "Learn English for dealing with customers."
+    },
+    {
+        title: "Lesson 12: Sales",
+        text: "Learn common sales vocabulary and expressions."
+    },
+    {
+        title: "Lesson 13: Marketing",
+        text: "Learn important marketing terminology."
+    },
+    {
+        title: "Lesson 14: Finance",
+        text: "Learn basic financial English."
+    },
+    {
+        title: "Lesson 15: Budgeting",
+        text: "Learn vocabulary related to budgets and expenses."
+    },
+    {
+        title: "Lesson 16: Projects",
+        text: "Learn English for project management."
+    },
+    {
+        title: "Lesson 17: Deadlines",
+        text: "Learn how to discuss deadlines and schedules."
+    },
+    {
+        title: "Lesson 18: Performance",
+        text: "Learn how to discuss employee and business performance."
+    },
+    {
+        title: "Lesson 19: Recruitment",
+        text: "Learn English for hiring and recruitment."
+    },
+    {
+        title: "Lesson 20: Interviews",
+        text: "Learn useful English for job interviews."
+    },
+    {
+        title: "Lesson 21: Conflict Management",
+        text: "Learn how to communicate during workplace conflicts."
+    },
+    {
+        title: "Lesson 22: Decision Making",
+        text: "Learn expressions used when making business decisions."
+    },
+    {
+        title: "Lesson 23: Strategy",
+        text: "Learn vocabulary related to business strategy."
+    },
+    {
+        title: "Lesson 24: Professional Communication",
+        text: "Review important English skills for professional communication."
+    }
+];
+
+const vocabulary = [
+    ["Manager", "مدير", "She is a successful manager."],
+    ["Leadership", "القيادة", "Good leadership improves team performance."],
+    ["Meeting", "اجتماع", "We have a meeting at 10 AM."],
+    ["Deadline", "موعد نهائي", "The deadline is next Friday."],
+    ["Strategy", "استراتيجية", "We need a new business strategy."],
+    ["Budget", "ميزانية", "The project is within budget."],
+    ["Customer", "عميل", "The customer is satisfied."],
+    ["Employee", "موظف", "Every employee has responsibilities."],
+    ["Performance", "أداء", "Her performance is excellent."],
+    ["Negotiation", "تفاوض", "The negotiation was successful."],
+    ["Revenue", "إيرادات", "Our revenue increased this year."],
+    ["Profit", "ربح", "The company made a good profit."],
+    ["Project", "مشروع", "The project starts next month."],
+    ["Teamwork", "العمل الجماعي", "Teamwork is essential."],
+    ["Decision", "قرار", "We need to make a decision."]
+];
+
+const questions = [
+    {
+        question: "What does 'manager' mean?",
+        options: ["موظف", "مدير", "عميل", "محاسب"],
+        answer: 1
+    },
+    {
+        question: "What is a deadline?",
+        options: ["موعد نهائي", "اجتماع", "ميزانية", "شركة"],
+        answer: 0
+    },
+    {
+        question: "What does 'profit' mean?",
+        options: ["خسارة", "موظف", "ربح", "مشروع"],
+        answer: 2
+    },
+    {
+        question: "What is teamwork?",
+        options: ["العمل الجماعي", "التفاوض", "القيادة", "التسويق"],
+        answer: 0
+    },
+    {
+        question: "What does 'strategy' mean?",
+        options: ["ميزانية", "استراتيجية", "موعد", "عميل"],
+        answer: 1
+    },
+    {
+        question: "Choose the correct sentence:",
+        options: [
+            "We have a meeting tomorrow.",
+            "We has a meeting tomorrow.",
+            "We having meeting tomorrow.",
+            "We have meeting tomorrow yesterday."
+        ],
+        answer: 0
+    },
+    {
+        question: "Choose the best phrase for an email:",
+        options: [
+            "Hey!",
+            "Please find attached the report.",
+            "Give me this.",
+            "Send now."
+        ],
+        answer: 1
+    },
+    {
+        question: "What does 'revenue' mean?",
+        options: ["إيرادات", "خسارة", "موظف", "اجتماع"],
+        answer: 0
+    },
+    {
+        question: "Which phrase is useful in a meeting?",
+        options: [
+            "Let's move on to the next point.",
+            "Give me money.",
+            "I don't business.",
+            "You go now."
+        ],
+        answer: 0
+    },
+    {
+        question: "What does 'leadership' mean?",
+        options: ["القيادة", "الميزانية", "المبيعات", "الموعد النهائي"],
+        answer: 0
+    }
+];
+
+let completedLessons =
+    JSON.parse(localStorage.getItem("completedLessons")) || [];
+
+function renderLessons() {
+
+    const container = document.getElementById("lessons");
+
+    container.innerHTML = "";
+
+    lessons.forEach((lesson, index) => {
+
+        const div = document.createElement("div");
+
+        div.className = "lesson";
+
+        div.innerHTML = `
+            <h3>${lesson.title}</h3>
+
+            <div class="lesson-content">
+                <p>${lesson.text}</p>
+
+                <button onclick="speak(${JSON.stringify(lesson.text)})">
+                    🔊 استماع
+                </button>
+
+                <button onclick="completeLesson(${index})">
+                    ✅ إكمال الدرس
+                </button>
+            </div>
+        `;
+
+        div.addEventListener("click", function(e) {
+
+            if (e.target.tagName === "BUTTON") return;
+
+            const content = div.querySelector(".lesson-content");
+
+            content.style.display =
+                content.style.display === "block"
+                ? "none"
+                : "block";
+        });
+
+        container.appendChild(div);
+    });
+}
+
+function completeLesson(index) {
+
+    if (!completedLessons.includes(index)) {
+
+        completedLessons.push(index);
+
+        localStorage.setItem(
+            "completedLessons",
+            JSON.stringify(completedLessons)
+        );
+    }
+
+    updateProgress();
+}
+
+function updateProgress() {
+
+    const percentage =
+        Math.round(
+            completedLessons.length / lessons.length * 100
+        );
+
+    document.getElementById("progressBar").style.width =
+        percentage + "%";
+
+    document.getElementById("progressText").innerText =
+        percentage + "%";
+}
+
+function renderVocabulary() {
+
+    const table = document.getElementById("vocabTable");
+
+    vocabulary.forEach(word => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>
+                ${word[0]}
+                <button onclick="speak(${JSON.stringify(word[0])})">
+                    🔊
+                </button>
+            </td>
+
+            <td>${word[1]}</td>
+
+            <td>
+                ${word[2]}
+                <button onclick="speak(${JSON.stringify(word[2])})">
+                    🔊
+                </button>
+            </td>
+        `;
+
+        table.appendChild(row);
+    });
+}
+
+function renderQuiz() {
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((q, index) => {
+
+        const div = document.createElement("div");
+
+        div.className = "quiz-question";
+
+        let html = `
+            <strong>
+                ${index + 1}. ${q.question}
+            </strong>
+        `;
+
+        q.options.forEach((option, optionIndex) => {
+
+            html += `
+                <label class="option">
+                    <input
+                        type="radio"
+                        name="question${index}"
+                        value="${optionIndex}"
+                    >
+                    ${option}
+                </label>
+            `;
+        });
+
+        div.innerHTML = html;
+
+        quiz.appendChild(div);
+    });
+}
+
+function checkQuiz() {
+
+    let score = 0;
+
+    questions.forEach((q, index) => {
+
+        const selected =
+            document.querySelector(
+                `input[name="question${index}"]:checked`
+            );
+
+        if (
+            selected &&
+            Number(selected.value) === q.answer
+        ) {
+            score++;
+        }
+    });
+
+    const percentage =
+        Math.round(score / questions.length * 100);
+
+    document.getElementById("result").innerText =
+        `نتيجتك: ${score} / ${questions.length} (${percentage}%)`;
+
+    const oldBest =
+        Number(localStorage.getItem("bestScore")) || 0;
+
+    if (percentage > oldBest) {
+
+        localStorage.setItem(
+            "bestScore",
+            percentage
+        );
+    }
+
+    updateBestScore();
+}
+
+function updateBestScore() {
+
+    const best =
+        localStorage.getItem("bestScore");
+
+    if (best !== null) {
+
+        document.getElementById("bestScore").innerText =
+            `أفضل نتيجة: ${best}%`;
+    }
+}
+
+function speak(text) {
+
+    if (!("speechSynthesis" in window)) {
+
+        alert("المتصفح لا يدعم خاصية النطق.");
+
+        return;
+    }
+
+    const speech =
+        new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+
+    speech.rate = 0.85;
+
+    window.speechSynthesis.cancel();
+
+    window.speechSynthesis.speak(speech);
+}
+
+renderLessons();
+renderVocabulary();
+renderQuiz();
+updateProgress();
+updateBestScore();
+
+</script>
+
+</body>
+</html>
